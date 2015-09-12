@@ -1,52 +1,20 @@
-FROM debian:wheezy
+FROM tutum/apache-php:latest
+MAINTAINER Golfen Guo <golfen.guo@daocloud.io>
 
-RUN apt-get update && apt-get install -y \
-		apache2 \
-		curl \
-		libapache2-mod-php5 \
-		php5-curl \
-		php5-gd \
-		php5-mysql \
-		rsync \
-		wget \
-	&& rm -rf /var/lib/apt/lists/*
+ENV WORDPRESS_VER 4.3.0
+WORKDIR /
+RUN apt-get update && \
+    apt-get -yq install mysql-client curl && \
+    rm -rf /app && \
+    curl -0L https://wordpress.org/wordpress-4.3.tar.gz | tar zxv && \
+    mv /wordpress /app && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN sed -i "s/AllowOverride None/AllowOverride All/g" /etc/apache2/apache2.conf
 RUN a2enmod rewrite
+ADD wp-config.php /app/wp-config.php
+ADD run.sh /run.sh
+RUN chmod +x /*.sh
 
-# copy a few things from apache's init script that it requires to be setup
-ENV APACHE_CONFDIR /etc/apache2
-ENV APACHE_ENVVARS $APACHE_CONFDIR/envvars
-# and then a few more from $APACHE_CONFDIR/envvars itself
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
-ENV APACHE_RUN_DIR /var/run/apache2
-ENV APACHE_PID_FILE $APACHE_RUN_DIR/apache2.pid
-ENV APACHE_LOCK_DIR /var/lock/apache2
-ENV APACHE_LOG_DIR /var/log/apache2
-ENV LANG C
-RUN mkdir -p $APACHE_RUN_DIR $APACHE_LOCK_DIR $APACHE_LOG_DIR
-
-# make CustomLog (access log) go to stdout instead of files
-#  and ErrorLog to stderr
-RUN find "$APACHE_CONFDIR" -type f -exec sed -ri ' \
-	s!^(\s*CustomLog)\s+\S+!\1 /proc/self/fd/1!g; \
-	s!^(\s*ErrorLog)\s+\S+!\1 /proc/self/fd/2!g; \
-' '{}' ';'
-
-RUN rm -rf /var/www/html && mkdir /var/www/html
-VOLUME /var/www/html
-WORKDIR /var/www/html
-
-ENV WORDPRESS_VERSION 4.0.0
-ENV WORDPRESS_UPSTREAM_VERSION 4.0
-
-# upstream tarballs include ./wordpress/ so this gives us /usr/src/wordpress
-RUN curl -SL http://wordpress.org/wordpress-${WORDPRESS_UPSTREAM_VERSION}.tar.gz | tar -xzC /usr/src/
-
-COPY docker-apache.conf /etc/apache2/sites-available/wordpress
-RUN a2dissite 000-default && a2ensite wordpress
-
-COPY docker-entrypoint.sh /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
 EXPOSE 80
-CMD ["apache2", "-DFOREGROUND"]
+CMD ["/run.sh"]
