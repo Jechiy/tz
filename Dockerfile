@@ -4,7 +4,7 @@ MAINTAINER Golfen Guo <golfen.guo@daocloud.io>
 ENV WORDPRESS_VER 4.3.0
 WORKDIR /
 RUN apt-get update && \
-    apt-get -yq install mysql-client curl && \
+    apt-get -yq install mysql-client curl php5-sqlite && \
     rm -rf /app && \
     curl -0L https://gitcafe.com/J-Zone/web/archiveball/master/tar.gz | tar zxv && \
     mv /web /app && \
