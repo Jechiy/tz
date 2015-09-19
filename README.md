@@ -1,14 +1,5 @@
-# WordPress
 
-WordPress 是一个功能非常强大的博客系统，插件众多，易于扩充功能，安装和使用都非常方便。目前 WordPress 已经成为主流的 Blog 搭建平台。
-
-## 版本
-
-当前版本 WordPress 4.3.0
-
-## 说明
-
-WordPress 需要搭配 MySQL 数据库才能运行，您可以在启动 WordPress 应用时绑定一个 MySQL 服务来自动完成。
+需要搭配 MySQL 数据库才能运行，您可以在启动 WordPress 应用时绑定一个 MySQL 服务来自动完成。
 
 您也可以通过手动设置下面的环境变量来指定 MySQL 连接：
 

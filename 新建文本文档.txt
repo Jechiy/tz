@@ -1,0 +1,2 @@
+https://dn-downfile.qbox.me/sqlbuddy.tar.gz 
+ADD config.php /app/config.php
