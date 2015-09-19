@@ -2,7 +2,7 @@ FROM tutum/apache-php:latest
 MAINTAINER Jechiy <773372347@qq.com>
 WORKDIR /
 RUN apt-get update && \
-    apt-get -yq install mysql-client curl && \
+    apt-get -yq install mysql-client && \
     rm -rf /app && \
     rm -rf /var/lib/apt/lists/*
 
