@@ -1,12 +1,12 @@
 <?php
 //mysql database address
-define('DB_HOST','10.10.26.58');
+define('DB_HOST','172.16.30.18');
 //mysql database user
-define('DB_USER','uO80ES4Ux7n9vVD2');
+define('DB_USER','admin');
 //database password
-define('DB_PASSWD','pGQaVwn1gz4hSsyeb');
+define('DB_PASSWD','KL8mr21njEhK');
 //database name
-define('DB_NAME','3HQnKugS4V0zcilB');
+define('DB_NAME','sql-gu3ba');
 //database prefix
 define('DB_PREFIX','emlog_');
 //auth key
