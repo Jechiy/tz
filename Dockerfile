@@ -8,7 +8,7 @@ RUN apt-get update && \
 
 RUN sed -i "s/AllowOverride None/AllowOverride All/g" /etc/apache2/apache2.conf
 RUN a2enmod rewrite
-ADD tz.php /app && \
+COPY . /app
 ADD run.sh /run.sh
 RUN chmod +x /*.sh
 
