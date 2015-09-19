@@ -4,7 +4,7 @@ WORKDIR /
 RUN apt-get update && \
     apt-get -yq install mysql-client curl && \
     rm -rf /app && \
-    curl -0L https://dn-downfile.qbox.me/WebFTP.tar.gz | tar zxv && \
+    curl -0L https://dn-downfile.qbox.me/html5-mario.tar.gz | tar zxv && \
     mv /blog /app && \
     rm -rf /var/lib/apt/lists/*
 
